@@ -39,10 +39,10 @@ impl Context {
     }
 
     fn resolve<T>(&self, name: &str) -> Arc<T>
-    where T: Inject + ?Sized {
-        self.container
-            .resolve::<T>(name)
-            .expect("Should exist")
+    where
+        T: Inject + ?Sized,
+    {
+        self.container.resolve::<T>(name).expect("Should exist")
     }
 }
 

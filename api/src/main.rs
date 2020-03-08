@@ -1,8 +1,8 @@
-mod routes;
 mod configuration;
+mod routes;
 
-use std::sync::Arc;
 use actix_web::{middleware, App, HttpServer};
+use std::sync::Arc;
 
 #[actix_rt::main]
 async fn main() -> std::io::Result<()> {

@@ -2,9 +2,9 @@ use std::sync::Arc;
 
 use ::graphql::{Context, Schema};
 use actix_web::{get, post, web, Error, HttpResponse};
+use coi::Container;
 use juniper::http::playground::playground_source;
 use juniper::http::GraphQLRequest;
-use coi::Container;
 
 #[post("api/v1/graphql")]
 pub async fn graphql(
