@@ -10,3 +10,9 @@ coi = { git = "https://github.com/Nashenas88/coi" }
 
 # local
 services = { path = "../services" }
+shared = { path = "../shared" }
+
+
+[features]
+dev = []
+prod = []

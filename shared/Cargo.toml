@@ -1,12 +1,13 @@
 [package]
-name = "services"
+name = "shared"
 version = "0.1.0"
 authors = ["Aaron Housh <dispersias@gmail.com>"]
 edition = "2018"
 
 [dependencies]
+serde_json = "1.0"
+serde = { version = "1.0", features = [ "derive" ] }
 coi = { git = "https://github.com/Nashenas88/coi" }
-
 
 [features]
 dev = []
