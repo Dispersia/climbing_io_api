@@ -1,5 +1,7 @@
 mod routes;
+mod configuration;
 
+use std::sync::Arc;
 use actix_web::{middleware, App, HttpServer};
 
 #[actix_rt::main]
@@ -7,10 +9,12 @@ async fn main() -> std::io::Result<()> {
     std::env::set_var("RUST_LOG", "actix_web=info");
     pretty_env_logger::init();
 
-    let schema = std::sync::Arc::new(graphql::create_schema());
+    let container = Arc::new(configuration::create_container());
+    let schema = Arc::new(graphql::create_schema());
 
     HttpServer::new(move || {
         App::new()
+            .data(container.clone())
             .data(schema.clone())
             .wrap(middleware::Logger::default())
             .configure(routes::register)

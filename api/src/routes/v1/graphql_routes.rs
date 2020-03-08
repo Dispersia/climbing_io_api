@@ -4,13 +4,15 @@ use ::graphql::{Context, Schema};
 use actix_web::{get, post, web, Error, HttpResponse};
 use juniper::http::playground::playground_source;
 use juniper::http::GraphQLRequest;
+use coi::Container;
 
 #[post("api/v1/graphql")]
 pub async fn graphql(
+    container: web::Data<Arc<Container>>,
     schema: web::Data<Arc<Schema>>,
     data: web::Json<GraphQLRequest>,
 ) -> Result<HttpResponse, Error> {
-    let ctx = Context {};
+    let ctx = Context::new(container.get_ref().clone());
 
     let response = web::block(move || {
         let res = data.execute(&schema, &ctx);

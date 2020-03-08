@@ -1,4 +1,7 @@
+use coi::{Container, Inject};
 use juniper::FieldResult;
+use services::Trait1;
+use std::sync::Arc;
 
 #[derive(juniper::GraphQLEnum)]
 pub enum Episode {
@@ -24,7 +27,24 @@ struct NewHuman {
     home_planet: String,
 }
 
-pub struct Context {}
+pub struct Context {
+    container: Arc<Container>,
+}
+
+impl Context {
+    pub fn new(container: Arc<Container>) -> Self {
+        Context {
+            container: container,
+        }
+    }
+
+    fn resolve<T>(&self, name: &str) -> Arc<T>
+    where T: Inject + ?Sized {
+        self.container
+            .resolve::<T>(name)
+            .expect("Should exist")
+    }
+}
 
 impl juniper::Context for Context {}
 
@@ -38,12 +58,14 @@ impl Query {
         "1.0"
     }
 
-    fn human(_context: &Context, id: String) -> FieldResult<Human> {
+    fn human(context: &Context, id: String) -> FieldResult<Human> {
+        let some_service = context.resolve::<dyn Trait1>("trait1");
+
         Ok(Human {
             id: id.to_string(),
             name: "Aaron Housh".to_string(),
             appears_in: vec![Episode::Jedi],
-            home_planet: "Earth".to_string(),
+            home_planet: some_service.describe().to_string(),
         })
     }
 }
