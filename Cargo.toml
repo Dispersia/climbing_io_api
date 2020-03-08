@@ -1,0 +1,11 @@
+[workspace]
+members = [
+    "api",
+    "data_access",
+    "graphql",
+    "services"
+]
+
+[profile.release]
+lto = 'fat'
+codegen-units = 1
