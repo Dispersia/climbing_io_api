@@ -1,6 +1,5 @@
 use coi::{Container, Inject};
 use juniper::FieldResult;
-use services::Trait1;
 use shared::Config;
 use std::sync::Arc;
 
@@ -60,14 +59,13 @@ impl Query {
     }
 
     fn human(context: &Context, id: String) -> FieldResult<Human> {
-        let some_service = context.resolve::<dyn Trait1>("trait1");
         let config = context.resolve::<Config>("config");
 
         Ok(Human {
             id: id.to_string(),
             name: config.name.to_string(),
             appears_in: vec![Episode::Jedi],
-            home_planet: some_service.describe().to_string(),
+            home_planet: "Earth".to_string(),
         })
     }
 }
