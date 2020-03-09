@@ -18,6 +18,6 @@ FROM alpine:3.11.3
 
 RUN apk --no-cache add ca-certificates
 
-COPY --from=builder /target/x86_64-unknown-linux-musl/release/api .
+COPY --from=builder /target/x86_64-unknown-linux-musl/debug/api .
 
 CMD [ "/api" ]
