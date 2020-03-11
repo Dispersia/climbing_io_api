@@ -1,6 +1,6 @@
 use coi::{Container, Inject};
 use juniper::FieldResult;
-use shared::Config;
+use services::JournalServiceTrait;
 use std::sync::Arc;
 
 #[derive(juniper::GraphQLEnum)]
@@ -50,7 +50,7 @@ impl juniper::Context for Context {}
 
 pub struct Query;
 
-#[juniper::object(
+#[juniper::graphql_object(
     Context = Context,
 )]
 impl Query {
@@ -58,12 +58,13 @@ impl Query {
         "1.0"
     }
 
-    fn human(context: &Context, id: String) -> FieldResult<Human> {
-        let config = context.resolve::<Config>("config");
+    async fn human(context: &Context, id: String) -> FieldResult<Human> {
+        let service = context.resolve::<dyn JournalServiceTrait>("journal_service");
+        let name = service.test_get().await;
 
         Ok(Human {
             id: id.to_string(),
-            name: config.name.to_string(),
+            name: name,
             appears_in: vec![Episode::Jedi],
             home_planet: "Earth".to_string(),
         })
@@ -72,7 +73,7 @@ impl Query {
 
 pub struct Mutation;
 
-#[juniper::object(
+#[juniper::graphql_object(
     Context = Context,
 )]
 impl Mutation {

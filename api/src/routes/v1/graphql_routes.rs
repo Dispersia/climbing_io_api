@@ -14,11 +14,8 @@ pub async fn graphql(
 ) -> Result<HttpResponse, Error> {
     let ctx = Context::new(container.get_ref().clone());
 
-    let response = web::block(move || {
-        let res = data.execute(&schema, &ctx);
-        Ok::<_, serde_json::error::Error>(serde_json::to_string(&res)?)
-    })
-    .await?;
+    let res = data.execute(&schema, &ctx).await;
+    let response = Ok::<_, serde_json::error::Error>(serde_json::to_string(&res)?)?;
 
     Ok(HttpResponse::Ok()
         .content_type("application/json")

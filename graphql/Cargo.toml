@@ -5,8 +5,9 @@ authors = ["Aaron Housh <dispersias@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-juniper = "0.14.2"
+juniper = { git = "https://github.com/graphql-rust/juniper" }
 coi = { git = "https://github.com/Nashenas88/coi" }
+futures = "0.3"
 
 # local
 services = { path = "../services" }

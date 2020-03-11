@@ -8,7 +8,7 @@ edition = "2018"
 # server
 actix-web = "2"
 actix-rt = "1"
-juniper = "0.14.2"
+juniper = { git = "https://github.com/graphql-rust/juniper" }
 
 # config
 log = "0.4"
