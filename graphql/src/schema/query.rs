@@ -38,7 +38,7 @@ impl Context {
         }
     }
 
-    fn resolve<T>(&self, name: &str) -> Arc<T>
+    fn resolve<T>(&self, name: &'static str) -> Arc<T>
     where
         T: Inject + ?Sized,
     {

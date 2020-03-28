@@ -22,7 +22,7 @@ pub struct Config {
     pub name: String,
 }
 
-fn get_files() -> Vec<&'static str> {
+fn get_files<'a>() -> Vec<&'a str> {
     let content = include_str!("../../appSettings.json");
     let mut list = vec![content];
 
