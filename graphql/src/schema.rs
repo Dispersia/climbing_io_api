@@ -1,8 +1,12 @@
+mod context;
+mod models;
+mod mutation;
 mod query;
 
-pub use query::Context;
+pub use context::Context;
 
-use query::{Mutation, Query};
+use mutation::Mutation;
+use query::Query;
 
 pub type Schema = juniper::RootNode<'static, Query, Mutation>;
 
