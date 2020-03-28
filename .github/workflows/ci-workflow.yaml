@@ -1,14 +1,22 @@
 name: Publish API
 on: [push]
+env:
+  IMAGE_NAME: dispersia/training_io_api
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
 
-      - uses: dispersia/training_io_api@master
-        with:
-          image: dispersia/training_io_api
-          registry: docker.io
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build image
+        run: docker build . --file Dockerfile --tag image
+
+      - name: Log into registry
+        run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+
+      - name: Push image
+        run: |
+          docker tag image $IMAGE_NAME:latest
+          docker push $IMAGE_NAME:$VERSION
