@@ -26,5 +26,5 @@ pub async fn graphql(
 pub async fn playground() -> HttpResponse {
     HttpResponse::Ok()
         .content_type("text/html; charset=utf-8")
-        .body(playground_source("http://127.0.0.1:8080/api/v1/graphql"))
+        .body(playground_source("http://127.0.0.1:8080/api/v1/graphql", None))
 }
