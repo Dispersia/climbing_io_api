@@ -1,7 +1,5 @@
 use super::context::Context;
-use super::models::{
-    Tag, TagInput
-};
+use super::models::{Tag, TagInput};
 use juniper::FieldResult;
 
 pub struct Mutation;

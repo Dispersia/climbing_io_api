@@ -1,15 +1,6 @@
-mod payloads;
 mod inputs;
+mod payloads;
 
-pub use payloads::{
-    ExerciseType,
-    Exercise,
-    RepitionWorkout,
-    Tag,
-    TimedWorkout,
-    Workout
-};
+pub use payloads::{Exercise, ExerciseType, RepititionWorkout, Tag, TimedWorkout, Workout};
 
-pub use inputs::{
-    TagInput
-};
+pub use inputs::TagInput;
