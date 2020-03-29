@@ -6,7 +6,7 @@ use coi::Container;
 use juniper::http::playground::playground_source;
 use juniper::http::GraphQLRequest;
 
-#[post("api/v1/graphql")]
+#[post("v1/graphql")]
 pub async fn graphql(
     container: web::Data<Arc<Container>>,
     schema: web::Data<Arc<Schema>>,
@@ -22,7 +22,7 @@ pub async fn graphql(
         .body(response))
 }
 
-#[get("api/v1/playground")]
+#[get("v1/playground")]
 pub async fn playground() -> HttpResponse {
     HttpResponse::Ok()
         .content_type("text/html; charset=utf-8")
