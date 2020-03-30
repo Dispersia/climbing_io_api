@@ -1,4 +1,5 @@
 use super::context::Context;
+use crate::error::GraphQLError;
 use juniper::FieldResult;
 use services::{ExerciseServiceTrait, TagServiceTrait};
 
@@ -10,15 +11,17 @@ pub struct Query;
     Context = Context,
 )]
 impl Query {
-    async fn tags(context: &Context) -> FieldResult<Vec<Tag>> {
+    async fn tags(context: &Context) -> Result<Vec<Tag>, GraphQLError> {
         let tag_service = context.resolve::<dyn TagServiceTrait>("tag_service");
 
         let tags: Vec<Tag> = tag_service
             .get_tags()
             .await
-            .into_iter()
-            .map(|x| x.into())
-            .collect();
+            .map(|x| x.into_iter().map(Into::into).collect())
+            .map_err(|e| {
+                log::error!("{}", e);
+                GraphQLError::GenericFailure
+            })?;
 
         Ok(tags)
     }

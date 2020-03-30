@@ -1,3 +1,4 @@
+mod error;
 mod journal;
 
 pub use journal::{

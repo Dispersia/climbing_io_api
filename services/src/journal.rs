@@ -9,4 +9,6 @@ pub use {
     workout_service::{WorkoutServiceProvider, WorkoutServiceTrait},
 };
 
-pub use models::{Exercise, Tag};
+pub use models::Exercise;
+
+pub use tag_service::Tag;

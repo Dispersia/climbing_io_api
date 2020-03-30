@@ -8,6 +8,7 @@ edition = "2018"
 juniper = { git = "https://github.com/graphql-rust/juniper" }
 coi = { git = "https://github.com/Nashenas88/coi" }
 futures = "0.3"
+log = "0.4"
 
 # local
 services = { path = "../services" }

@@ -1,4 +1,3 @@
 mod exercise;
-mod tag;
 
-pub use {exercise::Exercise, tag::Tag};
+pub use exercise::Exercise;
