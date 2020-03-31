@@ -11,6 +11,8 @@ async-trait = "0.1.24"
 serde_tokio_postgres = { git = "https://github.com/githubaccount624/serde_postgres" }
 serde = "1.0"
 thiserror = "1.0"
+postgres-native-tls = "0.3"
+native-tls = "0.2"
 
 # local
 shared = { path = "../shared" }

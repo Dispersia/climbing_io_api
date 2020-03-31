@@ -5,12 +5,12 @@ use serde::Deserialize;
 #[derive(Inject, Debug, Deserialize)]
 #[coi(provides pub Settings with load_config())]
 pub struct Settings {
-    database: Database,
+    pub database: Database,
 }
 
 #[derive(Debug, Deserialize)]
 pub struct Database {
-    connection_string: String,
+    pub connection_string: String,
 }
 
 fn load_config() -> Settings {

@@ -21,8 +21,7 @@ struct TagRepository {
 impl TagRepositoryTrait for TagRepository {
     async fn get_tags(&self) -> Result<Vec<DbTag>, Error> {
         let client = self.database_pool.get().await?;
-        let statement = client.prepare("SELECT id, name FROM tags").await?;
-        let rows = client.query(&statement, &[]).await?;
+        let rows = client.query("SELECT id, name FROM tags", &[]).await?;
         let data = rows
             .into_iter()
             .map(|x| {

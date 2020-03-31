@@ -1,9 +1,10 @@
 use coi::Inject;
 use mobc_postgres::{
     mobc::{Connection, Error as MobcError, Manager, Pool},
-    tokio_postgres::NoTls,
     PgConnectionManager,
 };
+use native_tls::{Certificate, TlsConnector};
+use postgres_native_tls::MakeTlsConnector;
 use shared::Settings;
 use std::sync::Arc;
 
@@ -11,17 +12,28 @@ use std::sync::Arc;
 #[derive(Inject)]
 #[coi(provides pub PostgresPool with PostgresPool::new(settings))]
 pub struct PostgresPool {
-    pool: Pool<PgConnectionManager<NoTls>>,
+    pool: Pool<PgConnectionManager<MakeTlsConnector>>,
     #[coi(inject)]
     settings: Arc<Settings>,
 }
 
 impl PostgresPool {
     pub fn new(settings: Arc<Settings>) -> Self {
-        let config = "postgresql://doadmin:y8w39xbc555s4mvt@journal-db-do-user-2475037-0.a.db.ondigitalocean.com:25060/defaultdb?sslmode=require"
+        let cert = std::fs::read("ca-certificate.pem").unwrap();
+        let cert = Certificate::from_pem(&cert).unwrap();
+        let connector = TlsConnector::builder()
+            .add_root_certificate(cert)
+            .build()
+            .unwrap();
+        let connector = MakeTlsConnector::new(connector);
+        println!("Database: {}", settings.as_ref().database.connection_string);
+        let config = settings
+            .as_ref()
+            .database
+            .connection_string
             .parse()
             .expect("Unable to parse connection string");
-        let manager = PgConnectionManager::new(config, NoTls);
+        let manager = PgConnectionManager::new(config, connector);
         let pool = Pool::builder().max_open(20).build(manager);
 
         Self { pool, settings }
@@ -30,8 +42,8 @@ impl PostgresPool {
     pub async fn get(
         &self,
     ) -> Result<
-        Connection<PgConnectionManager<NoTls>>,
-        MobcError<<PgConnectionManager<NoTls> as Manager>::Error>,
+        Connection<PgConnectionManager<MakeTlsConnector>>,
+        MobcError<<PgConnectionManager<MakeTlsConnector> as Manager>::Error>,
     > {
         self.pool.get().await
     }
