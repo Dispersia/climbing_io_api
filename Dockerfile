@@ -3,7 +3,7 @@ FROM rust:1.41.1-stretch AS builder
 
 RUN apt-get update && \
     apt-get -y install ca-certificates \
-        cmake musl-tools libssl-dev && \
+        cmake musl-tools libssl-dev openssl && \
     rm -rf /var/lib/apt/lists/*
 
 RUN rustup target add x86_64-unknown-linux-musl
