@@ -14,4 +14,6 @@ COPY --from=builder \
     /home/rust/src/target/x86_64-unknown-linux-musl/release/api \
     /usr/local/bin/
 
-CMD [ "/usr/local/bin/api" ]
+WORKDIR /usr/local/bin
+
+CMD [ "api" ]
