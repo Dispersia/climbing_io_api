@@ -12,8 +12,8 @@ RUN apk --no-cache add ca-certificates
 
 COPY --from=builder \
     /home/rust/src/target/x86_64-unknown-linux-musl/release/api \
-    /app/
+    /usr/local/bin/
 
-WORKDIR /app
+WORKDIR /usr/local/bin
 
 CMD [ "api" ]
