@@ -1,2 +1,2 @@
 [database]
-connection_string = "postgresql://doadmin:y8w39xbc555s4mvt@journal-db-do-user-2475037-0.a.db.ondigitalocean.com:25060/training_journal?sslmode=require"
+connection_string = "something"
