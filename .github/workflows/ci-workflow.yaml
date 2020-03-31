@@ -1,7 +1,7 @@
 name: Publish API
 on: [push]
 env:
-  IMAGE_NAME: dispersia/training_io_api
+  IMAGE_NAME: dispersia/trainingjournal_io_api
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 jobs:
