@@ -2,7 +2,7 @@ mod error;
 mod postgres_pool;
 mod repositories;
 
-pub use postgres_pool::create_pool_provider;
+pub use postgres_pool::PostgresPoolProvider;
 
 pub use repositories::DbTag;
 

@@ -12,6 +12,9 @@ serde_tokio_postgres = { git = "https://github.com/githubaccount624/serde_postgr
 serde = "1.0"
 thiserror = "1.0"
 
+# local
+shared = { path = "../shared" }
+
 [features]
 dev = []
 prod = []

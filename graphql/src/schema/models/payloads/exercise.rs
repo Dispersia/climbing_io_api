@@ -1,5 +1,5 @@
 use super::Tag;
-use crate::Context;
+use crate::{error::GraphQLError, Context};
 use services::TagServiceTrait;
 
 /// Annotates basic properties of an exercise
@@ -20,17 +20,19 @@ impl Exercise {
         self.name.as_str()
     }
 
-    async fn tags(&self, context: &Context) -> Vec<Tag> {
+    async fn tags(&self, context: &Context) -> Result<Vec<Tag>, GraphQLError> {
         let tag_service = context.resolve::<dyn TagServiceTrait>("tag_service");
 
         match self.id.parse::<i32>() {
-            Ok(id) => tag_service
-                .get_tags_by_exercise(id)
+            Ok(_id) => tag_service
+                .get_tags()
                 .await
-                .into_iter()
-                .map(|x| x.into())
-                .collect(),
-            Err(_) => vec![],
+                .map(|x| x.into_iter().map(Into::into).collect())
+                .map_err(|e| {
+                    log::error!("{}", e);
+                    GraphQLError::GenericFailure
+                }),
+            Err(_) => Err(GraphQLError::GenericFailure),
         }
     }
 }

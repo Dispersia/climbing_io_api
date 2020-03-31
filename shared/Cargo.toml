@@ -8,6 +8,7 @@ edition = "2018"
 serde_json = "1.0"
 serde = { version = "1.0", features = [ "derive" ] }
 coi = { git = "https://github.com/Nashenas88/coi" }
+config = "0.10"
 
 [features]
 dev = []

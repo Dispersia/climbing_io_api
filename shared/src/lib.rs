@@ -1,3 +1,3 @@
 mod configuration;
 
-pub use configuration::{Config, ConfigProvider};
+pub use configuration::{Settings, SettingsProvider};
