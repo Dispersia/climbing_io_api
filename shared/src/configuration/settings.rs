@@ -11,6 +11,7 @@ pub struct Settings {
 #[derive(Debug, Deserialize)]
 pub struct Database {
     pub connection_string: String,
+    pub cert_directory: String,
 }
 
 fn load_config() -> Settings {

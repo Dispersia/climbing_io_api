@@ -1,2 +1,3 @@
 [database]
 connection_string = "something"
+cert_directory = "./"

@@ -19,7 +19,10 @@ pub struct PostgresPool {
 
 impl PostgresPool {
     pub fn new(settings: Arc<Settings>) -> Self {
-        let cert = std::fs::read("ca-certificate.pem").unwrap();
+        let path = std::path::Path::new(&settings.database.cert_directory)
+            .join("ca-certificate.pem");
+
+        let cert = std::fs::read(path).unwrap();
         let cert = Certificate::from_pem(&cert).unwrap();
         let connector = TlsConnector::builder()
             .add_root_certificate(cert)
