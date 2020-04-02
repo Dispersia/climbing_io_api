@@ -22,7 +22,7 @@ fn load_config() -> Settings {
         .unwrap()
         .merge(config::File::from_str(ENV_SETTINGS_FILE, FileFormat::Toml))
         .unwrap()
-        .merge(config::Environment::with_prefix("APP"))
+        .merge(config::Environment::with_prefix("APP").separator("__"))
         .unwrap();
 
     settings.try_into().unwrap()
