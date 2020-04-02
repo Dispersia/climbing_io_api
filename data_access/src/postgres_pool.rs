@@ -29,7 +29,6 @@ impl PostgresPool {
             .build()
             .unwrap();
         let connector = MakeTlsConnector::new(connector);
-        println!("Database: {}", settings.as_ref().database.connection_string);
         let config = settings
             .as_ref()
             .database
